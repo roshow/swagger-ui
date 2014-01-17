@@ -2,7 +2,8 @@ class SwaggerUi extends Backbone.Router
 
   # Defaults
   dom_id: "swagger_ui"
-  loading_img: "images/throbber.gif"
+  # loading_img: "images/throbber.gif"
+  attributes: { loading_img: "images/throbber.gif" }
 
   # Attributes
   options: null
@@ -16,9 +17,12 @@ class SwaggerUi extends Backbone.Router
     if options.dom_id?
       @dom_id = options.dom_id
       delete options.dom_id
-    if options.loading_img?
-      @loading_img = options.loading_img
-      delete options.loading_img
+
+    # Add to and override any default values of attributes
+    if options.attributes?
+      for attr, val of options.attributes
+        @attributes[attr] = val
+      delete options.attributes
 
     # Create an empty div which contains the dom_id
     $('body').append('<div id="' + @dom_id + '"></div>') if not $('#' + @dom_id)?
@@ -59,8 +63,7 @@ class SwaggerUi extends Backbone.Router
   #  so it gets called when SwaggerApi completes loading
   render:() ->
     @showMessage('Finished Loading Resource Information. Rendering Swagger UI...')
-    loading_img = @loading_img
-    @mainView = new MainView({model: @api, el: $('#' + @dom_id), attributes:{loading_img: loading_img}}).render()
+    @mainView = new MainView({model: @api, el: $('#' + @dom_id), attributes:@attributes}).render()
     @showMessage()
     switch @options.docExpansion
       when "full" then Docs.expandOperationsForResource('')
