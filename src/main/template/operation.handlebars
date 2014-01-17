@@ -1,4 +1,5 @@
-
+<div>url, maybe: {{attributes.loading_img}}</div>
+{{#model}}
   <ul class='operations' >
     <li class='{{method}} operation' id='{{resourceName}}_{{nickname}}_{{method}}_{{number}}'>
       <div class='heading'>
@@ -61,14 +62,16 @@
             </tbody>
           </table>
           {{/if}}
-          {{#if isReadOnly}}
+          {{/model}}
+          {{#if model.isReadOnly}}
           {{else}}
           <div class='sandbox_header'>
             <input class='submit' name='commit' type='button' value='Try it out!' />
             <a href='#' class='response_hider' style='display:none'>Hide Response</a>
-            <img alt='Throbber' class='response_throbber' src='images/throbber.gif' style='display:none' />
+            <img alt='Throbber' class='response_throbber' src=' {{attributes.loading_img}}' style='display:none' />
           </div>
           {{/if}}
+          {{#model}}
         </form>
         <div class='response' style='display:none'>
           <h4>Request URL</h4>
@@ -83,3 +86,4 @@
       </div>
     </li>
   </ul>
+{{/model}}

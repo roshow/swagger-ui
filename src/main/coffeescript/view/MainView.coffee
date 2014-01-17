@@ -11,7 +11,8 @@ class MainView extends Backbone.View
 
   addResource: (resource) ->
     # Render a resource and add it to resources li
-    resourceView = new ResourceView({model: resource, tagName: 'li', id: 'resource_' + resource.name, className: 'resource'})
+    loading_img = @attributes.loading_img;
+    resourceView = new ResourceView({model: resource, tagName: 'li', id: 'resource_' + resource.name, className: 'resource', attributes:{loading_img: loading_img}})
     $('#resources').append resourceView.render().el
 
   clear: ->
